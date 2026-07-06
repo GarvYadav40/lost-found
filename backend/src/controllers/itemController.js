@@ -44,6 +44,7 @@ export const getItems = async (req, res) => {
           user: {
             select: {
               id: true,
+              clerkId: true,
               name: true,
               email: true,
               imageUrl: true,
@@ -89,6 +90,7 @@ export const getItemById = async (req, res) => {
         user: {
           select: {
             id: true,
+            clerkId: true,
             name: true,
             email: true,
             imageUrl: true,
@@ -130,6 +132,7 @@ export const createItem = async (req, res) => {
         user: {
           select: {
             id: true,
+            clerkId: true,
             name: true,
             email: true,
             imageUrl: true,
@@ -185,6 +188,7 @@ export const updateItem = async (req, res) => {
         user: {
           select: {
             id: true,
+            clerkId: true,
             name: true,
             email: true,
             imageUrl: true,

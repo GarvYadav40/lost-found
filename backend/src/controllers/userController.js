@@ -44,6 +44,7 @@ export const getDashboardItems = async (req, res) => {
         user: {
           select: {
             id: true,
+            clerkId: true,
             name: true,
             email: true,
             imageUrl: true,

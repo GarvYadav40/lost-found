@@ -69,7 +69,6 @@ dist/
 *.db-journal
 
 # Prisma
-/backend/prisma/migrations/
 /backend/prisma/dev.db
 
 # OS Files
