@@ -10,22 +10,17 @@ export const useApi = () => {
       baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
     });
 
-    instance.interceptors.request.use(
-      async (config) => {
-        try {
-          const token = await getToken();
-          if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-          }
-        } catch (error) {
-          console.error('Error fetching auth token in interceptor:', error);
-        }
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
+    instance.interceptors.request.use(async (config) => {
+      const token = await getToken();
+
+      console.log("Clerk token:", token);
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
-    );
+
+      return config;
+    });
 
     return instance;
   }, [getToken]);
