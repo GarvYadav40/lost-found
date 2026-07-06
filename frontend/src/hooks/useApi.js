@@ -1,12 +1,16 @@
 import { useAuth } from '@clerk/clerk-react';
-import { useEffect } from 'react';
-import api from '../api/axios';
+import { useMemo } from 'react';
+import axios from 'axios';
 
 export const useApi = () => {
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    const requestInterceptor = api.interceptors.request.use(
+  const apiInstance = useMemo(() => {
+    const instance = axios.create({
+      baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
+    });
+
+    instance.interceptors.request.use(
       async (config) => {
         try {
           const token = await getToken();
@@ -14,7 +18,7 @@ export const useApi = () => {
             config.headers.Authorization = `Bearer ${token}`;
           }
         } catch (error) {
-          console.error('Error fetching auth token:', error);
+          console.error('Error fetching auth token in interceptor:', error);
         }
         return config;
       },
@@ -23,10 +27,8 @@ export const useApi = () => {
       }
     );
 
-    return () => {
-      api.interceptors.request.eject(requestInterceptor);
-    };
+    return instance;
   }, [getToken]);
 
-  return api;
+  return apiInstance;
 };

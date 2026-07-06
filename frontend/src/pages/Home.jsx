@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from '../api/axios';
+import { useApi } from '../hooks/useApi';
 import { CATEGORIES } from '../constants/categories';
 import ItemCard from '../components/ItemCard';
 import { Search, SlidersHorizontal, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 
 const Home = () => {
+  const api = useApi();
   // Query States
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState(''); // '' (All), 'Lost', 'Found'
@@ -38,7 +39,7 @@ const Home = () => {
       if (status) params.status = status;
       if (category) params.category = category;
 
-      const response = await axios.get('/api/items', { params });
+      const response = await api.get('/api/items', { params });
       setItems(response.data.items);
       setPagination(response.data.pagination);
     } catch (err) {
@@ -47,7 +48,7 @@ const Home = () => {
     } finally {
       setLoading(false);
     }
-  }, [page, search, status, category, sort]);
+  }, [api, page, search, status, category, sort]);
 
   // Fetch items on state change
   useEffect(() => {

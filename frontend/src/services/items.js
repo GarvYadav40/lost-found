@@ -1,8 +1,6 @@
-import api from '../api/axios';
+export const fetchItems = (apiClient, params) => apiClient.get('/api/items', { params });
 
-export const fetchItems = (params) => api.get('/api/items', { params });
-
-export const fetchItemById = (id) => api.get(`/api/items/${id}`);
+export const fetchItemById = (apiClient, id) => apiClient.get(`/api/items/${id}`);
 
 export const createItem = (apiClient, data) => apiClient.post('/api/items', data);
 

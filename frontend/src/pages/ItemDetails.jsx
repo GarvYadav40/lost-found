@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
 import { useApi } from '../hooks/useApi';
-import axios from '../api/axios';
 import { MapPin, Calendar, Tag, PhoneCall, User, Edit3, Trash2, ChevronLeft, RefreshCw } from 'lucide-react';
 
 const ItemDetails = () => {
@@ -21,7 +20,7 @@ const ItemDetails = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`/api/items/${id}`);
+        const response = await api.get(`/api/items/${id}`);
         setItem(response.data);
       } catch (err) {
         console.error('Error fetching item details:', err);
@@ -32,7 +31,7 @@ const ItemDetails = () => {
     };
 
     fetchItemDetails();
-  }, [id]);
+  }, [api, id]);
 
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you want to delete this post? This action cannot be undone.')) {

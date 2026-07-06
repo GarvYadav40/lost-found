@@ -23,7 +23,7 @@ const EditItem = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetchItemById(id);
+        const response = await fetchItemById(api, id);
         const item = response.data;
 
         setInitialData({
