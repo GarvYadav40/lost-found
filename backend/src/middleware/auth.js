@@ -2,16 +2,28 @@ import { getAuth, clerkClient } from '@clerk/express';
 import prisma from '../config/db.js';
 
 export const syncAndRequireAuth = async (req, res, next) => {
-  const { userId } = getAuth(req);
+  console.log("Authorization:", req.headers.authorization);
+  //const { userId } = getAuth(req);
+  const auth = getAuth(req);
+
+ console.log("AUTH OBJECT:", auth);
+
+  const { userId } = auth;
 
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized: No active session' });
   }
 
   try {
-    let dbUser = await prisma.user.findUnique({
-      where: { clerkId: userId },
-    });
+    console.log("Incoming Clerk userId:", userId);
+
+let dbUser = await prisma.user.findUnique({
+  where: {
+    clerkId: userId,
+  },
+});
+
+console.log("Found dbUser:", dbUser);
 
     if (!dbUser) {
       // User not in DB, sync from Clerk

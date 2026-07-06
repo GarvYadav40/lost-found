@@ -11,8 +11,6 @@ import uploadRouter from './routes/upload.js';
 
 dotenv.config();
 
-console.log("Publishable:", process.env.CLERK_PUBLISHABLE_KEY?.slice(0, 15));
-console.log("Secret:", process.env.CLERK_SECRET_KEY?.slice(0, 15));
 
 const app = express();
 const PORT = process.env.PORT || 5000;
